@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<savedqueries xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <savedquery>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>0</CanBeDeleted>
+    <isquickfindquery>0</isquickfindquery>
+    <isprivate>0</isprivate>
+    <isdefault>1</isdefault>
+    <savedqueryid>{02c42aeb-41ee-43ad-acb3-e27cce5d2a9f}</savedqueryid>
+    <layoutxml>
+      <grid name="resultset" jump="cre47_title" select="1" icon="1" preview="1">
+        <row name="result" id="cre47_employeesid">
+          <cell name="cre47_title" width="300" />
+          <cell name="cre47_employeeid" width="150" />
+          <cell name="cre47_department" width="150" />
+          <cell name="cre47_phonenumber" width="150" />
+          <cell name="cre47_email" width="150" />
+          <cell name="cre47_bankaccountnumber" width="150" />
+          <cell name="cre47_pannumber" width="150" />
+          <cell name="cre47_fixedsalary" width="150" />
+          <cell name="cre47_per_x0020_day_x0020_salary" width="150" />
+        </row>
+      </grid>
+    </layoutxml>
+    <querytype>0</querytype>
+    <fetchxml>
+      <fetch version="1.0" mapping="logical">
+        <entity name="cre47_employees">
+          <attribute name="cre47_employeesid" />
+          <attribute name="cre47_title" />
+          <attribute name="createdon" />
+          <order attribute="cre47_title" descending="false" />
+          <filter type="and">
+            <condition attribute="statecode" operator="eq" value="0" />
+          </filter>
+          <attribute name="cre47_employeeid" />
+          <attribute name="cre47_department" />
+          <attribute name="cre47_phonenumber" />
+          <attribute name="cre47_email" />
+          <attribute name="cre47_bankaccountnumber" />
+          <attribute name="cre47_pannumber" />
+          <attribute name="cre47_fixedsalary" />
+          <attribute name="cre47_per_x0020_day_x0020_salary" />
+        </entity>
+      </fetch>
+    </fetchxml>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <LocalizedNames>
+      <LocalizedName description="Active Employees" languagecode="1033" />
+    </LocalizedNames>
+  </savedquery>
+</savedqueries>

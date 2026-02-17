@@ -1,0 +1,319 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_sharepointonline_1": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_a5ced"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      },
+      "shared_wordonlinebusiness": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedwordonlinebusiness_caf84"
+        },
+        "api": {
+          "name": "shared_wordonlinebusiness"
+        }
+      },
+      "shared_onedriveforbusiness": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedonedriveforbusiness_9478e"
+        },
+        "api": {
+          "name": "shared_onedriveforbusiness"
+        }
+      },
+      "shared_office365": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedoffice365_12564"
+        },
+        "api": {
+          "name": "shared_office365"
+        }
+      },
+      "shared_sharepointonline": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "new_sharedsharepointonline_ea04f"
+        },
+        "api": {
+          "name": "shared_sharepointonline"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "When_an_item_or_a_file_is_modified": {
+          "recurrence": {
+            "interval": 3,
+            "frequency": "Minute"
+          },
+          "splitOn": "@triggerOutputs()?['body/value']",
+          "metadata": {
+            "operationMetadataId": "75a9cadc-2bb3-4a7f-8508-bad3fe22c5ad"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_sharepointonline",
+              "operationId": "GetOnChangedItems",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+            },
+            "parameters": {
+              "dataset": "https://agilesoln.sharepoint.com/sites/PayrollApprovalSystem",
+              "table": "6a637494-6a5e-4c18-975b-a4e2c11cc230"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "actions": {
+        "Condition": {
+          "actions": {
+            "Get_item": {
+              "runAfter": {},
+              "metadata": {
+                "operationMetadataId": "2e25d9a7-b5a5-435c-8f37-32a42eb9fdb2"
+              },
+              "type": "OpenApiConnection",
+              "inputs": {
+                "host": {
+                  "connectionName": "shared_sharepointonline_1",
+                  "operationId": "GetItem",
+                  "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline"
+                },
+                "parameters": {
+                  "dataset": "https://agilesoln.sharepoint.com/sites/PayrollApprovalSystem",
+                  "table": "6a637494-6a5e-4c18-975b-a4e2c11cc230",
+                  "id": "@triggerOutputs()?['body/ID']"
+                },
+                "authentication": "@parameters('$authentication')"
+              }
+            }
+          },
+          "runAfter": {},
+          "expression": {
+            "equals": [
+              "@triggerBody()?['SalaryStatus/Value']",
+              "Approved"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "129049d9-9685-449b-afc3-5096e6762fbd"
+          },
+          "type": "If"
+        },
+        "Populate_a_Microsoft_Word_template": {
+          "runAfter": {
+            "Initialize_variable_3": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "01NQRUKSAQOYPA4SDHPBH2V3JNPNBDH5IE": "/Templates/SalarySlipTemplate.docx",
+            "operationMetadataId": "5bd73285-4146-411b-87eb-b60433e9d49e"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_wordonlinebusiness",
+              "operationId": "CreateFileItem",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_wordonlinebusiness"
+            },
+            "parameters": {
+              "source": "sites/agilesoln.sharepoint.com,df578267-2886-4d5a-b7e3-404e5edf6e32,668ccf0e-ddc1-4847-9270-6d0de3d660ef",
+              "drive": "b!Z4JX34YoWk2340BOXt9uMg7PjGbB3UdIknBtDePWYO8ptbB_SXFzT4yTtf8ZTpDV",
+              "file": "01NQRUKSAQOYPA4SDHPBH2V3JNPNBDH5IE",
+              "dynamicFileSchema/20136949": "@outputs('Get_item')?['body/Month/Value']",
+              "dynamicFileSchema/652068252": "@variables('FinalPayableSalary')",
+              "dynamicFileSchema/894455837": "@outputs('Get_item')?['body/LeaveDays']",
+              "dynamicFileSchema/1215718808": "@outputs('Get_item')?['body/Year']",
+              "dynamicFileSchema/1218260979": "@variables('DeductionAmount')",
+              "dynamicFileSchema/1331192425": "@variables('SalaryPerDay')",
+              "dynamicFileSchema/1613665600": "@outputs('Get_item')?['body/Employee/Value']",
+              "dynamicFileSchema/1881806786": "@outputs('TotalDaysInMonth')",
+              "dynamicFileSchema/2049337312": "@outputs('Get_item')?['body/WorkingDays']"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "TotalDaysInMonth": {
+          "runAfter": {
+            "Condition": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5bd45c1e-8577-4bc1-94c0-8cd32dd4cd7a"
+          },
+          "type": "Compose",
+          "inputs": "@if(equals(body('Get_item')?['Month']?['Value'],'January'),31,\r\nif(equals(body('Get_item')?['Month']?['Value'],'February'),28,\r\nif(equals(body('Get_item')?['Month']?['Value'],'March'),31,\r\nif(equals(body('Get_item')?['Month']?['Value'],'April'),30,\r\nif(equals(body('Get_item')?['Month']?['Value'],'May'),31,\r\nif(equals(body('Get_item')?['Month']?['Value'],'June'),30,\r\nif(equals(body('Get_item')?['Month']?['Value'],'July'),31,\r\nif(equals(body('Get_item')?['Month']?['Value'],'August'),31,\r\nif(equals(body('Get_item')?['Month']?['Value'],'September'),30,\r\nif(equals(body('Get_item')?['Month']?['Value'],'October'),31,\r\nif(equals(body('Get_item')?['Month']?['Value'],'November'),30,31)))))))))))\r\n"
+        },
+        "Initialize_variable": {
+          "runAfter": {
+            "TotalDaysInMonth": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "a40eb7f7-5110-4913-a281-1c04eac23690"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "SalaryPerDay",
+                "type": "string",
+                "value": "@formatNumber(\r\n    div(\r\n        float(body('Get_item')?['FixedSalary']),\r\n        float(outputs('TotalDaysInMonth'))\r\n    ),\r\n'0.00'\r\n)\r\n"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_2": {
+          "runAfter": {
+            "Initialize_variable": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "9b8a969a-a1f7-4952-adef-1144c57a21f0"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "DeductionAmount",
+                "type": "string",
+                "value": "@formatNumber(\r\n    mul(\r\n        float(body('Get_item')?['LeaveDays']),\r\n        float(\r\n            div(\r\n                float(body('Get_item')?['FixedSalary']),\r\n                float(outputs('TotalDaysInMonth'))\r\n            )\r\n        )\r\n    ),\r\n'0.00'\r\n)\r\n"
+              }
+            ]
+          }
+        },
+        "Initialize_variable_3": {
+          "runAfter": {
+            "Initialize_variable_2": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "e5df3f3d-e321-4550-8f06-84dab7e0b8b1"
+          },
+          "type": "InitializeVariable",
+          "inputs": {
+            "variables": [
+              {
+                "name": "FinalPayableSalary",
+                "type": "string",
+                "value": "@formatNumber(\r\n    sub(\r\n        float(body('Get_item')?['FixedSalary']),\r\n        float(variables('DeductionAmount'))\r\n    ),\r\n'0.00'\r\n)\r\n"
+              }
+            ]
+          }
+        },
+        "Create_file": {
+          "runAfter": {
+            "Populate_a_Microsoft_Word_template": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "5b04a875-7e68-4bd6-8866-8fc97d2ad9d5"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_onedriveforbusiness",
+              "operationId": "CreateFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness"
+            },
+            "parameters": {
+              "folderPath": "/Payslips",
+              "name": "@concat('Payslip-', body('Get_item')?['Employee']?['Value'], '.docx')\r\n",
+              "body": "@body('Populate_a_Microsoft_Word_template')"
+            },
+            "authentication": "@parameters('$authentication')"
+          },
+          "runtimeConfiguration": {
+            "contentTransfer": {
+              "transferMode": "Chunked"
+            }
+          }
+        },
+        "Convert_file": {
+          "runAfter": {
+            "Create_file": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "b4c8e803-a7be-46ba-8df6-e83f9321527d"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_onedriveforbusiness",
+              "operationId": "ConvertFile",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_onedriveforbusiness"
+            },
+            "parameters": {
+              "id": "@outputs('Create_file')?['body/Id']",
+              "type": "PDF"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        },
+        "Send_an_email_(V2)_2": {
+          "runAfter": {
+            "Convert_file": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "operationMetadataId": "2474fb60-55b1-4931-b051-700b9842e0ec"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_office365",
+              "operationId": "SendEmailV2",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_office365"
+            },
+            "parameters": {
+              "emailMessage/To": "rinesh.chaulagai@agile.com.np",
+              "emailMessage/Subject": "Salary Payslip - @{body('Get_item')?['Month']?['Value']} @{body('Get_item')?['Year']}\n",
+              "emailMessage/Body": "<p>Hello,<br>\n<br>\nYour salary has been approved and your payslip is attached.<br>\n<br>\nMonth: @{body('Get_item')?['Month']?['Value']}<br>\nYear: @{body('Get_item')?['Year']}<br>\n<br>\nRegards,<br>\nFinance Department<br>\n</p>",
+              "emailMessage/Attachments": [
+                {
+                  "Name": "SalaryPayslip.pdf",
+                  "ContentBytes": "@body('Convert_file')"
+                }
+              ],
+              "emailMessage/Importance": "Normal"
+            },
+            "authentication": "@parameters('$authentication')"
+          }
+        }
+      },
+      "outputs": {}
+    },
+    "templateName": ""
+  },
+  "schemaVersion": "1.0.0.0"
+}

@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <systemform>
+    <formid>{9f35e28e-f237-46e6-9549-ecef9bcfef25}</formid>
+    <IntroducedVersion>1.0</IntroducedVersion>
+    <FormPresentation>1</FormPresentation>
+    <FormActivationState>1</FormActivationState>
+    <form>
+      <tabs>
+        <tab verticallayout="true" id="{8ad1755b-ed01-4b39-a819-7d3776d4bb98}" IsUserDefined="1">
+          <labels>
+            <label description="General" languagecode="1033" />
+          </labels>
+          <columns>
+            <column width="100%">
+              <sections>
+                <section showlabel="false" showbar="false" IsUserDefined="0" id="{a5ff841b-0274-414d-9b09-d4da1fde7afe}">
+                  <labels>
+                    <label description="General" languagecode="1033" />
+                  </labels>
+                  <rows>
+                    <row>
+                      <cell id="{62c02317-e63e-41c9-8a6b-c78071fb06e4}">
+                        <labels>
+                          <label description="Employee Name" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_title" classid="{4273EDBD-AC1D-40d3-9FB2-095C621B552D}" datafieldname="cre47_title" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{024d280c-4e98-4ce1-b178-bbf3a848a20c}">
+                        <labels>
+                          <label description="Owner" languagecode="1033" />
+                        </labels>
+                        <control id="ownerid" classid="{270BD3DB-D9AF-4782-9025-509E298DEC0A}" datafieldname="ownerid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{8cd3effd-da10-4424-9f2d-26dba3cf6715}">
+                        <labels>
+                          <label description="Employee ID" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_employeeid" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="cre47_employeeid" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{24cfd680-81e9-4fb4-a3a0-81df93ed9851}">
+                        <labels>
+                          <label description="Department" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_department" classid="{3ef39988-22bb-4f0b-bbbe-64b5a3748aee}" datafieldname="cre47_department" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{dcddf3f5-a2cc-4d6e-9c4c-1f23bdffaf86}">
+                        <labels>
+                          <label description="Phone Number" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_phonenumber" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="cre47_phonenumber" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{4b7d19bf-4267-4dd3-bcca-856ad2fa009a}">
+                        <labels>
+                          <label description="Email" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_email" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="cre47_email" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{1cd89b04-6957-4f1e-839f-5c02de27703e}">
+                        <labels>
+                          <label description="Bank Account Number" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_bankaccountnumber" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="cre47_bankaccountnumber" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{d6c03a4f-86ba-4028-8ee7-84efa7761c7a}">
+                        <labels>
+                          <label description="PAN Number" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_pannumber" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="cre47_pannumber" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{f14f6cf3-5ad3-4f6b-b394-95718a3a6602}">
+                        <labels>
+                          <label description="Fixed Salary" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_fixedsalary" classid="{c3efe0c3-0ec6-42be-8349-cbd9079dfd8e}" datafieldname="cre47_fixedsalary" />
+                      </cell>
+                    </row>
+                    <row>
+                      <cell id="{f3f72467-769b-4b67-b470-45eacb14c513}">
+                        <labels>
+                          <label description="Per Day Salary" languagecode="1033" />
+                        </labels>
+                        <control id="cre47_per_x0020_day_x0020_salary" classid="{4273edbd-ac1d-40d3-9fb2-095c621b552d}" datafieldname="cre47_per_x0020_day_x0020_salary" />
+                      </cell>
+                    </row>
+                  </rows>
+                </section>
+              </sections>
+            </column>
+          </columns>
+        </tab>
+      </tabs>
+    </form>
+    <IsCustomizable>1</IsCustomizable>
+    <CanBeDeleted>1</CanBeDeleted>
+    <LocalizedNames>
+      <LocalizedName description="Information" languagecode="1033" />
+    </LocalizedNames>
+    <Descriptions>
+      <Description description="A form for this entity." languagecode="1033" />
+    </Descriptions>
+  </systemform>
+</forms>
