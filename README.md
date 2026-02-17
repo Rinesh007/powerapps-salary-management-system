@@ -182,7 +182,6 @@ Create a SharePoint list named **`SalaryRequests`** with the following columns:
 ## 👤 Author
 
 **Rinesh Chaulagai**
-B.Tech — Computer Science Engineering
 
 ---
 
